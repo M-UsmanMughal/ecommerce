@@ -10,14 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('dashboard/css/bootstrap.css')}}">
 
-    <link rel="stylesheet" href="{{asset('dashboard/vendors/iconly/bold.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('dashboard/vendors/iconly/bold.css')}}">
 
     <link rel="stylesheet" href="{{asset('dashboard/vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
     <link rel="stylesheet" href="{{asset('dashboard/vendors/bootstrap-icons/bootstrap-icons.css')}}">
     <link rel="stylesheet" href="{{asset('dashboard/css/app.css')}}">
-    <link rel="shortcut icon" href="{{asset('dashboard/images/favicon.svg" type="image/x-icon')}}">
+    <link rel="shortcut icon" href="{{asset('dashboard/images/favicon.svg" type="image/x-icon')}}"> -->
 </head>
-
 <body>
     <div id="app">
         <div id="sidebar" class="active">
@@ -381,13 +380,11 @@
         </div>
         @yield('contants')
     </div>
-    <script src="{{asset('dashboard/vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+    <!-- <script src="{{asset('dashboard/vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('dashboard/js/bootstrap.bundle.min.js')}}"></script>
-
     <script src="{{asset('dashboard/vendors/apexcharts/apexcharts.js')}}"></script>
     <script src="{{asset('dashboard/js/pages/dashboard.js')}}"></script>
-
-    <script src="{{asset('dashboard/js/main.js')}}"></script>
+    <script src="{{asset('dashboard/js/main.js')}}"></script> -->
 </body>
 
 </html>
