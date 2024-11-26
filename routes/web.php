@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CetagoreController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\WebsiteController;
    Route::middleware(['auth'])->group(function() {
     Route::get('/logout', action: [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('/cetagories' , CetagoreController::class);
 });
-});
+});   
 
