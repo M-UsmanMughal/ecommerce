@@ -39,6 +39,33 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
+.modal-content {
+  border-radius: 15px;
+  background: #f9f9f9;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background: #007bff;
+  border: none;
+  transition: background 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background: #0056b3;
+}
+
+.btn-outline-secondary {
+  border: 1px solid #ddd;
+  transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.btn-outline-secondary:hover {
+  background: #f8f9fa;
+  border-color: #ccc;
+}
+
+
 @font-face {
   font-family: Poppins-Regular;
   src: url('../fonts/Poppins/Poppins-Regular.ttf'); 

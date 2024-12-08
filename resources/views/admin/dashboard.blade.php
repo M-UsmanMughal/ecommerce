@@ -68,6 +68,7 @@
 
                     <label for="status" class="form-label">Status:</label>
                     <select name="status" class="form-control" required>
+                      <option value="">Select Status...</option>
                       <option value="1">Active</option>
                       <option value="0">Inactive</option>
                     </select><br>
@@ -94,28 +95,73 @@
                 </tr>
               </thead>
               <tbody>
-                @forelse ($cetagories as $cetagory)
-                <tr>
-                  <td>{{ $cetagory->id  }}</td>
-                  <td>{{ $cetagory->name }}</td>
-                  <td>
-                    <img src="{{ asset('images/' . $cetagory->photo) }}" alt="Image" width="50">
-                  </td>
-                  <td>{{ $cetagory->status == 1 ? 'Active' : 'Inactive' }}</td>
-                  <td>
-                    <!-- <a href="{{ route('admin.cetagories.edit', $cetagory->id) }}" class="btn btn-primary">Edit</a> -->
-                    <form action="{{ route('admin.cetagories.destroy', $cetagory->id) }}" method="POST" style="display: inline;">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                  </td>
-                </tr>
-                @empty
-                <tr>
-                  <td colspan="5" class="text-center">No categories found.</td>
-                </tr>
-                @endforelse
+              @forelse ($cetagories as $cetagory)
+<tr>
+  <td>{{ $cetagory->id }}</td>
+  <td>{{ $cetagory->name }}</td>
+  <td>
+    <img src="{{ asset('images/' . $cetagory->photo) }}" alt="Image" width="50">
+  </td>
+  <td>{{ $cetagory->status == 1 ? 'Active' : 'Inactive' }}</td>
+  <td>
+    <!-- Edit Category Button -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editCetagoryModal{{ $cetagory->id }}">
+      Edit
+    </button>
+
+    <!-- Edit Category Modal -->
+    <div class="modal fade" id="editCetagoryModal{{ $cetagory->id }}" tabindex="-1" aria-labelledby="editCetagoryModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editCetagoryModalLabel">Edit Cetagory</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ route('admin.cetagories.update', $cetagory->id) }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <label for="name" class="form-label">Cetagory Name:</label>
+              <input type="text" name="name" id="name" class="form-control" value="{{ $cetagory->name }}" required><br>
+
+              <label for="description" class="form-label">Description:</label>
+              <textarea name="description" class="form-control" required>{{ $cetagory->description }}</textarea><br>
+
+              <label for="photo" class="form-label">Cetagory Photo:</label>
+              <input type="file" class="form-control" name="photo"><br>
+              <p>Current Image:</p>
+              <img src="{{ asset('images/' . $cetagory->photo) }}" alt="Image" width="100"><br><br>
+
+              <label for="status" class="form-label">Status:</label>
+              <select name="status" class="form-control" required>
+                <option value="1" {{ $cetagory->status == 1 ? 'selected' : '' }}>Active</option>
+                <option value="0" {{ $cetagory->status == 0 ? 'selected' : '' }}>Inactive</option>
+              </select><br>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update Cetagory</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Category -->
+    <form action="{{ route('admin.cetagories.destroy', $cetagory->id) }}" method="POST" style="display: inline;">
+      @csrf
+      @method('DELETE')
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </td>
+</tr>
+@empty
+<tr>
+  <td colspan="5" class="text-center">No categories found.</td>
+</tr>
+@endforelse
+
               </tbody>
 
             </table>
@@ -125,17 +171,20 @@
     </section>
   </div>
 
-  <footer>
-    <div class="footer clearfix mb-0 text-muted">
-      <div class="float-start">
-        <p>2021 &copy; Mazer</p>
-      </div>
-      <div class="float-end">
-        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-            href="http://ahmadsaugi.com">A. Saugi</a></p>
-      </div>
-    </div>
-  </footer>
+ 
 </div>
 
 @endsection
+
+@push('css')
+<link rel="stylesheet" href="{{asset('adminstyle/vendors/simple-datatables/style.css')}}">
+@endpush
+
+@push('js')
+<script src="{{asset('adminstyle/vendors/simple-datatables/simple-datatables.js')}}"></script>
+<script>
+        // Simple Datatable
+        let table1 = document.querySelector('#table1');
+        let dataTable = new simpleDatatables.DataTable(table1);
+    </script>
+@endpush

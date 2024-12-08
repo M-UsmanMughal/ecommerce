@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cetagore;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,4 +12,5 @@ class DashboardController extends Controller
         $cetagories = Cetagore::all();
         return view('admin.dashboard' , compact('cetagories'));
     }
+   
 }

@@ -74,9 +74,26 @@ class CetagoreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update(Request $request, Cetagore $cetagory)
     {
-        
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|boolean',
+        ]);
+    
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $imageName = time() . '.' . $request->photo->extension();
+            $request->photo->move(public_path('images'), $imageName);
+            $data['photo'] = $imageName;
+        }
+    
+        // Update the category
+        $cetagory->update($data);
+    
+        return redirect()->back()->with('success', 'Cetagory updated successfully!');
     }
     
 
