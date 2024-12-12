@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class WebsiteController extends Controller
 {
     public function index(){
-        return view('index');
+        $products = Product::all(); 
+        return view('index' , compact('products'));
     }
     public function shop()
     {
@@ -23,5 +24,8 @@ class WebsiteController extends Controller
     }
     public function feature(){
         return view('feature');
+    }
+    public function chekoutPage(){
+        return view('chekout');
     }
 }

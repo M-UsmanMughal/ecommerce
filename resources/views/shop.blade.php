@@ -1,6 +1,5 @@
 @extends('tamplate')
 @section('content')
-
 <!-- Product -->
 <section class="bg0 p-t-23 p-b-130">
 	<div class="container">
@@ -414,6 +413,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 
 
 </script>

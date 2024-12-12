@@ -46,6 +46,24 @@
                                 <span>Products</span>
                             </a>
                         </li>
+                        <li class="sidebar-item active ">
+                            <a href="./ordar" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Ordars</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item active ">
+                            <a href="./users" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item active ">
+                            <a href="./setting" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
