@@ -162,7 +162,7 @@
 	</div>
 
 
-	@yield('shop')
+	{{-- @yield('shop') --}}
 
 	<section class="bg0 p-t-23 p-b-130">
 		<div class="container">
