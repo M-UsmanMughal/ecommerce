@@ -5,7 +5,7 @@ use App\Http\Controllers\CetagoreController;
 use App\Http\Controllers\ChekoutAuthController;
 use App\Http\Controllers\ChekoutRegisterController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\OrdarController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserRegisterController;
@@ -35,7 +35,7 @@ use App\Http\Controllers\WebsiteController;
     Route::resource('/cetagories' , CetagoreController::class);
     Route::resource('/products' , ProductController::class);
     Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-    Route::resource('/ordar' , OrdarController::class);
+    Route::resource('/order' , OrderController::class);
     Route::resource('/users', UserRegisterController::class);
     Route::resource('/setting' , SettingController::class);
     

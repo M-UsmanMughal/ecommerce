@@ -95,3 +95,7 @@
 
 
 @endsection
+
+@section('title')
+Contact
+@endsection

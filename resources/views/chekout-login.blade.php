@@ -38,7 +38,7 @@
 						<form action="{{ route('admin.checkout-login-auth')}}" method="POST" class="login-form">
             @csrf
 		      		<div class="form-group">
-		      			<input type="text" class="form-control rounded-left" name="email" placeholder="Enter Your Eamil*" >
+		      			<input type="email" class="form-control rounded-left" name="email" placeholder="Enter Your Eamil*" >
 		      		</div>
 	            <div class="form-group d-flex">
 	              <input type="password" class="form-control rounded-left" name="password" placeholder="Enter Your Password*" >
@@ -73,4 +73,7 @@
 </html>
 
 
+@endsection
+@section('title')
+chekout-Login
 @endsection

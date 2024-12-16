@@ -222,3 +222,6 @@
 
 
 @endsection
+@section('title')
+Feature
+@endsection

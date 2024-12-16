@@ -12,4 +12,5 @@ class Register extends Model
 
     protected $table = 'registration'; 
     protected $fillable = ['name', 'phone', 'email', 'password']; 
+
 }

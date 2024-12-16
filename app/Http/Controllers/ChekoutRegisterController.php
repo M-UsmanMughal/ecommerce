@@ -13,21 +13,33 @@ class ChekoutRegisterController extends Controller
         return view('chekout-register');
     }
 
-    public function chekoutRegisterAuth(Request $request){
+    
+    public function chekoutRegisterAuth(Request $request)
+    {
+        // Validate the user input
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|',
-            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string',
+            'email' => 'required|string|email|max:255|unique:registration,email',
             'password' => 'required|string|min:8',
         ]);
-
+    
+        // Check if the user is already registered (optional for edge cases)
+        $existingUser = Register::where('email', $request->email)->first();
+        if ($existingUser) {
+            return redirect()->back()->withErrors(['email' => 'This email is already registered.']);
+        }
+    
+        // Register the user
         $user = Register::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        return view('chekout')->with('Your account has been Registered!');
-
+    
+      
+        return redirect()->route('chekoutPage')->with('success', 'Your account has been registered successfully!');
     }
+    
 }

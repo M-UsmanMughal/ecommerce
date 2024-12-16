@@ -28,10 +28,10 @@ class ChekoutAuthController extends Controller
        }
    
        // Attempt to authenticate the user
-       
+       Auth::login($validatedData);
        if (Auth::attempt(['email' => $validatedData['email'], 'password' => $validatedData['password']])) {
           $request->session()->regenerate(); // Regenerate session for security
-          return redirect()->route('chekout'); // Redirect to the checkout page
+          return redirect()-> view('chekout'); // Redirect to the checkout page
          }
    
        return redirect()->back()->withErrors(['email' => 'Invalid email or password.']);

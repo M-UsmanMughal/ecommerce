@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Ordar;
 use Illuminate\Http\Request;
 
-class OrdarController extends Controller
+class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+ 
     public function index()
     {
        return view('admin.ordar');
@@ -28,7 +26,17 @@ class OrdarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'payment_method' => 'required|string|max:255',
+            'product_name' => 'required|string|max:255',
+            'quantity' => 'required|numeric',
+            'price' => 'required|numeric',
+            'total_price' => 'required|numeric',
+        ]);
     }
 
     /**

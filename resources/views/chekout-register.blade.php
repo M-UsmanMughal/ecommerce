@@ -78,3 +78,7 @@
 
 
 @endsection
+
+@section('title')
+chekout-register
+@endsection

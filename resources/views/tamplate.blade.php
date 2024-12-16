@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Ecommerce</title>
+	<title>Ecommerce - @yield('title')</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -429,7 +429,11 @@
 
 
 <!------------------------------------------------------------------------------------------------------>
-     @yield('content')
+		@hasSection('content')
+		@yield('content')
+			@else
+			  <h1>Page Not Found</h1>
+		@endif
 <!------------------------------------------------------------------------------------------------------>
 
 
