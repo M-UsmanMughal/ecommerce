@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ordar;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
@@ -32,11 +33,19 @@ class OrderController extends Controller
             'phone' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'payment_method' => 'required|string|max:255',
-            'product_name' => 'required|string|max:255',
-            'quantity' => 'required|numeric',
-            'price' => 'required|numeric',
-            'total_price' => 'required|numeric',
+            // 'product_name' => 'required|string|max:255',
+            // 'quantity' => 'required|numeric',
+            // 'price' => 'required|numeric',
+            // 'total_price' => 'required|numeric',
         ]);
+
+        // Create a new order
+        $ordar = Ordar::create($data);
+
+        // Redirect with success message
+        Alert::success('Added','Product added successfully');
+        return redirect()->route('shop')->with('success', 'Order created successfully');
+        
     }
 
     /**

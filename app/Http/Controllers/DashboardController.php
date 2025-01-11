@@ -12,5 +12,9 @@ class DashboardController extends Controller
         $cetagories = Cetagore::all();
         return view('admin.dashboard' , compact('cetagories'));
     }
+
+    public function ordar(){
+        return view('admin.ordar');
+    }
    
 }
