@@ -94,129 +94,100 @@
 						</div>
 					</div>
 
-					<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-						<a href="{{route('chekout-login')}}">Proceed to Checkout</a>
-					</button>
+					<button 
+    class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" 
+    id="proceed_btn">
+    Proceed to Checkout
+</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-	let cart_row = document.getElementById('cart_row');
-	let cartItems = JSON.parse(localStorage.getItem('cart'));
+    let cart_row = document.getElementById('cart_row');
+    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
-	cart_row.innerHTML = "";
+    // Clear existing rows
+    cart_row.innerHTML = "";
 
-	if (cartItems && cartItems.length > 0) {
-		cartItems.forEach(item => {
-			const rowHTML = `
-        <tr class="table_row" data-id="${item.id}">
-            <td class="column-1">
-                <div class="how-itemcart1">
-                    <img src="/images/${item.photo}" alt="IMG">
-                </div>
-            </td>
-            <td class="column-2">${item.name}</td>
-            <td class="column-3">$ ${item.price}</td>
-            <td class="column-4">
-                <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" data-id="${item.id}">
-                        <i class="fs-16 zmdi zmdi-minus"></i>
-                    </div>
+    if (cartItems.length > 0) {
+        // Populate table rows if cart has items
+        cartItems.forEach(item => {
+            const rowHTML = `
+                <tr class="table_row" data-id="${item.id}">
+                    <td class="column-1">
+                        <div class="how-itemcart1">
+                            <img src="/images/${item.photo}" alt="IMG">
+                        </div>
+                    </td>
+                    <td class="column-2">${item.name}</td>
+                    <td class="column-3">$ ${item.price}</td>
+                    <td class="column-4">
+                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" data-id="${item.id}">
+                                <i class="fs-16 zmdi zmdi-minus"></i>
+                            </div>
+                            <input class="mtext-104 cl3 txt-center num-product" 
+                                   type="number" 
+                                   name="num-product" 
+                                   value="${item.quantity}" 
+                                   data-id="${item.id}" 
+                                   readonly>
+                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" data-id="${item.id}">
+                                <i class="fs-16 zmdi zmdi-plus"></i>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="column-5 total-price">$ ${(item.price * item.quantity).toFixed(2)}</td>
+                </tr>
+            `;
+            cart_row.innerHTML += rowHTML;
+        });
+    } else {
+        // Show a message if the cart is empty
+        cart_row.innerHTML = `<tr><td colspan="5" class="text-center">Your cart is empty.</td></tr>`;
+    }
 
-                    <input class="mtext-104 cl3 txt-center num-product" 
-                           type="number" 
-                           name="num-product" 
-                           value="1" 
-                           data-id="${item.id}" 
-                           readonly>
+    // Handle Proceed to Checkout Button
+    document.getElementById('proceed_btn').addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default action
 
-                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" data-id="${item.id}">
-                        <i class="fs-16 zmdi zmdi-plus"></i>
-                    </div>
-                </div>
-            </td>
-            <td class="column-5 total-price">$ ${(item.price * item.quantity).toFixed(2)}</td>
-        </tr>
-        `;
+        const cart = JSON.parse(localStorage.getItem('cart'));
 
-			// Append the HTML to the table
-			cart_row.innerHTML += rowHTML;
-		});
-	} else {
-		// Show a message if the cart is empty
-		cart_row.innerHTML = `<tr><td colspan="5" class="text-center">Your cart is empty.</td></tr>`;
-	}
-
-	// Add event listeners for the quantity buttons using event delegation
-	cart_row.addEventListener("click", function(e) {
-		const button = e.target.closest(".btn-num-product-down, .btn-num-product-up");
-		if (!button) return;
-
-		const row = button.closest("tr");
-		const input = row.querySelector(".num-product");
-		const productId = input.dataset.id;
-		const priceCell = row.querySelector(".column-3");
-		const totalCell = row.querySelector(".total-price");
-
-		let quantity = parseInt(input.value);
-		const price = parseFloat(priceCell.textContent.replace("$", ""));
-
-		// Determine if incrementing or decrementing
-		// if (button.classList.contains("btn-num-product-down") && quantity > 1) {
-		//     quantity--;
-		// } else if (button.classList.contains("btn-num-product-up")) {
-		//     quantity++;
-		// }
-
-		// Update input value
-		input.value = quantity;
-
-		// Update the total price for this row
-		totalCell.textContent = `$ ${(price * quantity).toFixed(2)}`;
-
-		// Update the cart in localStorage
-		updateCart(productId, quantity);
-	});
-
-	// Function to update the cart in localStorage
-	function updateCart(productId, newQuantity) {
-		let cart = JSON.parse(localStorage.getItem("cart")) || [];
-		const productIndex = cart.findIndex(item => item.id === parseInt(productId));
-		if (productIndex !== -1) {
-			cart[productIndex].quantity = newQuantity;
-			localStorage.setItem("cart", JSON.stringify(cart));
-		}
-	}
-
-	// Sub Total Amount And All Items	Total Amount 
-
-	let subTotal = document.getElementById("sub_total");
-	let totalAllItems = document.getElementById("total_all_items");
-	let totalPrice = 0;
-	cartItems.forEach(item => {
-    totalPrice += item.price * item.quantity;
-  });
-	subTotal.textContent = `$ ${totalPrice.toFixed(2)}`;
-	totalAllItems.textContent = `$ ${totalPrice.toFixed(2)}`;
-	// Update total in localStorage
-	localStorage.setItem("total_amount", totalPrice.toFixed(2));
-
-	// When user click update cart button then update total in localStorage and update total in localStorage
-	document.getElementById("update_cart").addEventListener("click", function() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let totalPrice = 0;
-    cart.forEach(item => {
-      totalPrice += item.price * item.quantity;
+        if (!cart || cart.length === 0) {
+            // Show SweetAlert error if cart is empty
+            Swal.fire({
+                icon: 'error',
+                title: 'Cart is Empty',
+                text: 'You cannot proceed to checkout without adding items to the cart.',
+            });
+        } else {
+            // Proceed to checkout
+            window.location.href = "{{route('chekout-login')}}";
+        }
     });
+
+    // Update Subtotal and Total
+    const subTotal = document.getElementById("sub_total");
+    const totalAllItems = document.getElementById("total_all_items");
+    let totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    subTotal.textContent = `$ ${totalPrice.toFixed(2)}`;
+    totalAllItems.textContent = `$ ${totalPrice.toFixed(2)}`;
+
+    // Save total price to localStorage
     localStorage.setItem("total_amount", totalPrice.toFixed(2));
-	location.reload();
 
-  });
-
-
+    // Update Cart Button Functionality
+    document.getElementById("update_cart").addEventListener("click", function () {
+        let updatedTotalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        localStorage.setItem("total_amount", updatedTotalPrice.toFixed(2));
+        location.reload();
+    });
 </script>
+
 
 
 @endsection

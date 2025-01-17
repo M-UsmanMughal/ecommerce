@@ -17,10 +17,8 @@ return new class extends Migration
             $table->string('phone');
             $table->text('address');
             $table->string('payment_method');
-            // $table->string('product_name');
-            // $table->integer('quantity');
-            // $table->float('price');
-            // $table->float('total_price');
+            $table->string('product_name');
+            $table->float('total_price');
             $table->timestamps();
         });
     }

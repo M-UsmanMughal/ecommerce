@@ -1,7 +1,6 @@
 @extends('admin.tamplate')
 @section('contant')
 
-
 <div id="main">
   <header class="mb-3">
     <a href="#" class="burger-btn d-block d-xl-none">
@@ -37,18 +36,31 @@
             <table class="table table-striped" id="table1">
               <thead>
                 <tr>
-                  <th>User Id</th>
                   <th>Name</th>
-                  <th>Address</th>
                   <th>Phone</th>
-                  <th>Product id</th>
+                  <th>Address</th>
+                  <th>Product Name</th>
                   <th>Payment</th>
                   <th>Amount</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                
+                @foreach ($ordars as $ordar)
+                <tr>
+                  <td>{{ $ordar->name }}</td>
+                  <td>{{ $ordar->phone }}</td>
+                  <td>{{ $ordar->address }}</td>
+                  <td>{{ $ordar->product_name}}</td>
+                  <td>{{ $ordar->payment_method }}</td>
+                  <td>{{ $ordar->total_price }}</td>
+                  <td>
+                    <button onclick="deleteOrder({{ $ordar->id }})" class="btn btn-success btn-sm">Deliver</button>
+                    <a href="{{ route('admin.order.edit', $ordar->id)}}" class="btn btn-primary btn-sm">Accept</a>
+                      <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                  </td>
+                </tr>
+                @endforeach
               </tbody>
           </div>
         </div>

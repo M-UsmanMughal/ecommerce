@@ -8,10 +8,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
- 
     public function index()
     {
-       return view('admin.ordar');
+        return view('admin.ordar');
     }
 
     /**
@@ -33,19 +32,15 @@ class OrderController extends Controller
             'phone' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'payment_method' => 'required|string|max:255',
-            // 'product_name' => 'required|string|max:255',
-            // 'quantity' => 'required|numeric',
-            // 'price' => 'required|numeric',
-            // 'total_price' => 'required|numeric',
+            'product_name' => 'required|string|max:255',
+            'total_price' => 'required',
         ]);
 
         // Create a new order
         $ordar = Ordar::create($data);
-
+        Alert::success('Ordar', 'Ordar Submit Successfully');
         // Redirect with success message
-        Alert::success('Added','Product added successfully');
         return redirect()->route('shop')->with('success', 'Order created successfully');
-        
     }
 
     /**

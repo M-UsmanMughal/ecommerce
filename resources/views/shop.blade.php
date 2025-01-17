@@ -278,18 +278,30 @@
 		</div>
 		<!-- Modal1 -->
 		<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" id="quickViewModal" style="display: none;">
-			<div class="overlay-modal1 js-hide-modal1"></div>
-			<div class="container">
-				<div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-					<button class="how-pos3 hov3 trans-04 js-hide-modal1">
-						<img src="{{ asset('website/images/icons/icon-close.png') }}" alt="CLOSE">
-					</button>
-					<div id="modal-content">
-						<!-- Dynamic content will be loaded here -->
-					</div>
-				</div>
-			</div>
-		</div>
+    <div class="overlay-modal1 js-hide-modal1" style="background-color: rgba(0, 0, 0, 0.7); position: fixed; top: 0; left: 0; width: 100%; height: 100%;"></div>
+    <div class="container">
+        <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent" style="background: #fff; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); max-width: 700px; margin: auto; position: relative;">
+            <!-- Close Button -->
+            <button class="how-pos3 hov3 trans-04 js-hide-modal1" style="position: absolute; top: 15px; right: 15px; background: transparent; border: none; cursor: pointer;">
+                <img src="{{ asset('website/images/icons/icon-close.png') }}" alt="CLOSE" style="width: 20px; height: 20px;">
+            </button>
+
+            <!-- Modal Content -->
+            <div id="modal-content" style="padding: 20px;">
+                <!-- Dynamic content will be loaded here -->
+                <h2 style="font-size: 1.5rem; margin-bottom: 20px; text-align: center; color: #333;">Quick View</h2>
+                <p style="text-align: center; color: #666;">Loading content, please wait...</p>
+            </div>
+
+            <!-- Footer Area (Optional for actions) -->
+            <div class="modal-footer" style="padding: 20px; border-top: 1px solid #ddd; text-align: center;">
+                <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer js-hide-modal1" style="background-color: #333; color: #fff; border-radius: 5px; padding: 10px 20px; font-size: 1rem;">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 		<!-- Pagination -->
 		<div class="flex-c-m flex-w w-full p-t-38">
@@ -303,6 +315,8 @@
 		</div>
 	</div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const quickViewButtons = document.querySelectorAll(".quick-view-btn");
@@ -335,64 +349,84 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 // Populate modal with product details
-                modalContent.innerHTML = `
-                    <div class="modal-dialog modal-dialog-centered modal-md">
-                        <div class="modal-content p-4 rounded-3 shadow">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-6 text-center">
-                                    <img src="/images/${product.photo}" alt="${product.name}" 
-                                         class="rounded-3 shadow-sm img-fluid" 
-                                         style="max-width: 100%; height: auto;">
-                                </div>
-                                <div class="col-md-6">
-                                    <h4 class="fw-bold text-dark mb-3">${product.name}</h4>
-                                    <h5 class="text-success fw-bold mb-3">
-                                        <span>$${product.price}</span>
-                                    </h5>
-                                    <p class="text-muted small mb-4">
-                                        ${product.description || "No description available for this product."}
-                                    </p>
-                                    <div class="d-flex flex-column gap-2">
-                                        <button class="btn btn-primary text-white shadow-sm w-100 py-2 add-to-cart-btn">
-                                            <i class="fa fa-shopping-cart me-2"></i>Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                modalContent.innerHTML = `<div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content p-4 rounded-3 shadow">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-6 text-center">
+                <img src="/images/${product.photo}" alt="${product.name}" 
+                     class="rounded-3 shadow-sm img-fluid" 
+                     style="max-width: 100%; height: auto;">
+            </div>
+            <div class="col-md-6">
+                <h4 class="fw-bold text-dark mb-3">${product.name}</h4>
+                <h5 class="text-success fw-bold mb-3">
+                    <span>$${product.price}</span>
+                </h5>
+                <p class="text-muted small mb-4">
+                    ${product.description || "No description available for this product."}
+                </p>
+                <div class="d-flex flex-column gap-2">
+                    <!-- Add to Cart Button with corrected styles -->
+                    <button class="btn btn-primary text-white shadow-sm w-100 py-2 add-to-cart-btn" 
+                            style="background-color: #007bff; border: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <!-- Icon -->
+                        <i class="fa fa-shopping-cart" style="font-size: 18px;"></i>
+                        <!-- Text -->
+                        <span style="font-size: 16px;">Add to Cart</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+`;
 
                 // Show modal
                 quickViewModal.style.display = "block";
 
                 // Add event listener for the Add to Cart button
-                const addToCartButton = document.querySelector(".add-to-cart-btn");
-                if (addToCartButton) {
-                    addToCartButton.addEventListener("click", function () {
-                        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+               const addToCartButton = document.querySelector(".add-to-cart-btn");
+if (addToCartButton) {
+    addToCartButton.addEventListener("click", function () {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-                        const productData = {
-                            id: product.id,
-                            name: product.name,
-                            price: product.price,
-                            photo: product.photo,
-                            quantity: 1
-                        };
+        const productData = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            photo: product.photo,
+            quantity: 1
+        };
 
-                        const existingProduct = cart.find(item => item.id === product.id);
-                        if (existingProduct) {
-                            existingProduct.quantity += 1;
-                        } else {
-                            cart.push(productData);
-                        }
+        const existingProduct = cart.find(item => item.id === product.id);
+        if (existingProduct) {
+            existingProduct.quantity += 1;
+        } else {
+            cart.push(productData);
+        }
 
-                        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("cart", JSON.stringify(cart));
 
-                        alert(`${product.name} has been added to the cart!`);
-                        quickViewModal.style.display = "none";
-                    });
-                }
+        // Using SweetAlert instead of the default alert
+        Swal.fire({
+            icon: 'success',
+            title: `${product.name} has been added to the cart!`,
+            text: `You have successfully added ${product.name} to your shopping cart.`,
+            showConfirmButton: true,
+            confirmButtonText: 'Go to Cart',
+            confirmButtonColor: '#3085d6',
+            cancelButtonText: 'Continue Shopping',
+            showCancelButton: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = './feature'; // Redirect to the cart page if user clicks "Go to Cart"
+            }
+        });
+
+        quickViewModal.style.display = "none";
+    });
+}
+
             } catch (error) {
                 console.error("Fetch error:", error);
                 alert("Failed to load product details. Please try again.");
